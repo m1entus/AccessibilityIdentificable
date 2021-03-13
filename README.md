@@ -64,6 +64,13 @@ class CustomView: UIView, AccessibilityIdentificable {
 }
 ```
 
+To be able to find and generate all classes that implements `AccessibilityIdentificable` you need to add `Build Phases -> Run Script` which will change depends on project structure and for me look like this:
+
+```sh
+#/bin/sh
+
+$PODS_ROOT/Sourcery/bin/sourcery --sources $SRCROOT --sources $SRCROOT/../Source --output $SRCROOT/AccessibilityIdentificableUITests/Generated --templates $SRCROOT/../Template
+```
 
 Sourcery in UITests will generate classes:
 
