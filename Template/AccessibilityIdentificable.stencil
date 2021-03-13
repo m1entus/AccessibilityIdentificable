@@ -1,0 +1,37 @@
+
+// @generated
+
+// MARK: - Identifiers
+
+public enum Identifiers {
+    // NOOP - just namespace
+}
+
+// MARK: - ArrayIdentifiers
+
+public struct ArrayIdentifiers {
+    let value: String
+
+    public subscript(index: Int) -> String {
+        return value + "_\(index)"
+    }
+}
+
+{% for type in types.implementing.AccessibilityIdentificable %}
+// MARK: - Identifiers > {{ type.name }}
+
+public extension Identifiers {
+    struct {{ type.name }} {
+    {% for var in type.variables %}
+      {% if var.type.based.UIViewAccessibilityIdentificable or var.typeName|hasPrefix:"UI" %}
+        public static var {{ var.name }} = "{{ type.name }}.{{ var.name }}"
+      {% else %}
+        {% if var.typeName|hasPrefix:"[UI" %}
+        public static var {{ var.name }} = ArrayIdentifiers(value: "{{ type.name }}.{{ var.name }}")
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    }
+}
+
+{% endfor %}

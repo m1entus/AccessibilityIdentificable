@@ -1,0 +1,12 @@
+platform :ios, "14.0"
+
+use_frameworks!
+
+target :AccessibilityIdentificable do
+pod "Sourcery"
+end
+
+target :AccessibilityIdentificableUITests do
+pod "Sourcery"
+end
+
